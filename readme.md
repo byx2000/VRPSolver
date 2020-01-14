@@ -4,6 +4,16 @@
 
 
 
+## 配置
+
+为在项目中使用 `VRPSolver` ，需要如下配置：
+
+1. 将C#项目的生成目标平台设置为 `x86` （默认为 `Any CPU` ），编译运行
+2. 将 `VRPSolver.cs` 和 `VRP-Kernel.dll` 放到项目根目录，并添加到项目中
+3. 找到项目生成的exe文件所在的目录（`项目名称\bin\x86\Debug\netcoreapp3.x`），将 `VRP-Kernel.dll` 复制到该目录下
+
+
+
 ## 接口说明
 
 类 `VRPSolver` 的公共接口如下：
