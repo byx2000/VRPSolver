@@ -1,6 +1,6 @@
-# `VRPSolve` 使用说明
+# VRPSolver 使用说明
 
-`VRPSolve` 是VRP求解核心算法的C#封装类，该类调用 `VRP-Kernel.dll` 中的核心算法导出函数，并对数据类型进行封装，以方便C#中的调用。
+`VRPSolver` 是VRP求解核心算法的C#封装类，该类调用 `VRP-Kernel.dll` 中的核心算法导出函数，并对原始C++数据类型进行封装，以方便C#中的调用。
 
 
 
@@ -28,15 +28,17 @@
   ```c#
   public delegate void OnFinish
   (
-      int[][] path,    //所有车的路径，path[i]为第i辆车的路径(不包含原点)
-      double[] load,   //所有车的载重，load[i]为第i辆车的载重
-      double[] mileage //所有车的里程，mileage[i]为第i辆车的历程
+      int[][] path,    //path[i]为第i辆车的路径(不包含原点)
+      double[] load,   //load[i]为第i辆车的载重
+      double[] mileage //mileage[i]为第i辆车的里程
   );
   ```
 
 
 
 ## 使用示例
+
+Program.cs
 
 ```c#
 using System;
@@ -82,5 +84,3 @@ class Program
     }
 }
 ```
-
-参见 `Program.cs`
