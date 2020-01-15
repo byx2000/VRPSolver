@@ -51,7 +51,7 @@ class VRPSolver
 
         Solve(numNode, px, py, pDemand, numCar, pCapacity, pDisLimit, k1, k2, k3, 
             // 包装原始回调方法
-            delegate (int numCar, IntPtr path, IntPtr pathLen, IntPtr load, IntPtr mileage)
+            delegate (int t_numCar, IntPtr path, IntPtr pathLen, IntPtr load, IntPtr mileage)
             {
                 int[][] pathArr = new int[numCar][];
 
