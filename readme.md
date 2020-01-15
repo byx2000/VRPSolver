@@ -48,7 +48,9 @@
 
 ## 使用示例
 
-Sample1.cs
+**Sample1**
+
+源码：Sample1.cs
 
 ```c#
 using System;
@@ -102,7 +104,11 @@ class Sample1
 }
 ```
 
-Sample2.cs
+
+
+**Sample2**
+
+源码：Sample2.cs
 
 输入文件：in.txt
 
