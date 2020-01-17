@@ -7,7 +7,7 @@ class VRPSolver
     private delegate void Callback(int numCar, IntPtr path, IntPtr pathLen, IntPtr load, IntPtr mileage);
 
     // 原始核心算法导出函数
-    [DllImport("VRP-Kernel.dll")]
+    [DllImport("VRP-Kernel.dll", CallingConvention = CallingConvention.Cdecl)]
     private static extern void Solve(
         int numNode, IntPtr x, IntPtr y, IntPtr demand, // 配送点信息
         int numCar, IntPtr capacity, IntPtr disLimit, // 车辆信息
