@@ -23,28 +23,49 @@
   ```c#
   public static void Solve
   (
-      double[] x, //x[i]为第i个配送点的横坐标，原点为x[0]
-      double[] y, //y[i]为第i个配送点的纵坐标，原点为y[0]
-      double[] demand,  //demand[i]为第i个配送点的货物需求量，demand[0]将被忽略
-      double[] capacity, //capacity[i]为第i辆车的最大载重量
-      double[] disLimit, //disLimit[i]为第i辆车的最大里程
-      double k1, double k2, double k3, //k1、k2、k3分别为时间、里程、车辆数的权重
-      OnFinish onFinish //求解完成后的回调方法(请看下面介绍)
+      double[] x, // x[i]为第i个配送点的横坐标，原点为x[0]
+      double[] y, // y[i]为第i个配送点的纵坐标，原点为y[0]
+      double[] demand,  // demand[i]为第i个配送点的货物需求量，demand[0]将被忽略
+      double[] capacity, // capacity[i]为第i辆车的最大载重量
+      double[] disLimit, // disLimit[i]为第i辆车的最大里程
+      double k1, double k2, double k3, // k1、k2、k3分别为时间、里程、车辆数的权重
+      OnFinish onFinish, // 求解成功回调方法(请看下面介绍)
+      OnError onError // 求解失败回调方法(请看下面介绍)
   ); 
   ```
 
-* 求解完成后的回调方法（委托）
+* 求解成功回调方法
 
   ```c#
   public delegate void OnFinish
   (
-      int[][] path,    //path[i]为第i辆车的路径(不包含原点)
-      double[] load,   //load[i]为第i辆车的载重
-      double[] mileage //mileage[i]为第i辆车的里程
+      int[][] path,    // path[i]为第i辆车的路径(不包含原点)
+      double[] load,   // load[i]为第i辆车的载重
+      double[] mileage // mileage[i]为第i辆车的里程
   );
   ```
 
+* 求解失败回调方法
 
+  ```c#
+   public delegate void OnError
+   (
+       int errCode // 错误代码
+   );
+  ```
+
+  所有错误代码如下：
+
+  ```c#
+  public static readonly int NODE_DATA_SIZE_INVALID = 1; // 配送点数据长度不一致
+  public static readonly int CAR_DATA_SIZE_INVALID = 2; // 车辆数据长度不一致
+  public static readonly int WEIGHT_INVALID = 3; // 权重数值不合法
+  public static readonly int DEMAND_INVALID = 4; // 配送点需求量不合法
+  public static readonly int CAPACITY_INVALID = 5; // 车辆载重不合法
+  public static readonly int DISLIMIT_INVALID = 6; // 车辆里程限制不合法
+  ```
+
+  
 
 ## 使用示例
 
@@ -57,7 +78,7 @@ using System;
 
 class Sample1
 {
-    // 当求解完成时，此方法将会被调用
+    // 求解成功回调方法
     static private void OnFinish(int[][] path, double[] load, double[] mileage)
     {
         Console.WriteLine("Sample1求解完成！\n");
@@ -84,6 +105,41 @@ class Sample1
         Console.WriteLine();
     }
 
+    // 求解失败回调方法
+    static private void OnError(int errCode)
+    {
+        Console.WriteLine("求解失败");
+
+        if (errCode == VRPSolver.NODE_DATA_SIZE_INVALID)
+        {
+            Console.WriteLine("配送点数据长度不一致");
+        }
+        else if (errCode == VRPSolver.CAR_DATA_SIZE_INVALID)
+        {
+            Console.WriteLine("车辆数据长度不一致");
+        }
+        else if (errCode == VRPSolver.WEIGHT_INVALID)
+        {
+            Console.WriteLine("权重数值不合法");
+        }
+        else if (errCode == VRPSolver.DEMAND_INVALID)
+        {
+            Console.WriteLine("配送点需求不合法");
+        }
+        else if (errCode == VRPSolver.CAPACITY_INVALID)
+        {
+            Console.WriteLine("车辆载重量不合法");
+        }
+        else if (errCode == VRPSolver.DISLIMIT_INVALID)
+        {
+            Console.WriteLine("车辆里程限制不合法");
+        }
+        else
+        {
+            Console.WriteLine("未知错误");
+        }
+    }
+
     static public void Run()
     {
         // 10个配送点
@@ -99,7 +155,7 @@ class Sample1
         double k3 = 1.0;
 
         // 求解
-        VRPSolver.Solve(x, y, demand, capacity, disLimit, k1, k2, k3, OnFinish);
+        VRPSolver.Solve(x, y, demand, capacity, disLimit, k1, k2, k3, OnFinish, OnError);
     }
 }
 ```
@@ -118,7 +174,7 @@ using System.IO;
 
 class Sample2
 {
-    // 当求解完成时，此方法将会被调用
+    // 求解成功回调方法
     static private void OnFinish(int[][] path, double[] load, double[] mileage)
     {
         Console.WriteLine("Sample2求解完成！\n");
@@ -142,6 +198,41 @@ class Sample2
         }
 
         Console.WriteLine("时间：" + maxMileage);
+    }
+
+    // 求解失败回调方法
+    static private void OnError(int errCode)
+    {
+        Console.WriteLine("求解失败");
+
+        if (errCode == VRPSolver.NODE_DATA_SIZE_INVALID)
+        {
+            Console.WriteLine("配送点数据长度不一致");
+        }
+        else if (errCode == VRPSolver.CAR_DATA_SIZE_INVALID)
+        {
+            Console.WriteLine("车辆数据长度不一致");
+        }
+        else if (errCode == VRPSolver.WEIGHT_INVALID)
+        {
+            Console.WriteLine("权重数值不合法");
+        }
+        else if (errCode == VRPSolver.DEMAND_INVALID)
+        {
+            Console.WriteLine("配送点需求不合法");
+        }
+        else if (errCode == VRPSolver.CAPACITY_INVALID)
+        {
+            Console.WriteLine("车辆载重量不合法");
+        }
+        else if (errCode == VRPSolver.DISLIMIT_INVALID)
+        {
+            Console.WriteLine("车辆里程限制不合法");
+        }
+        else
+        {
+            Console.WriteLine("未知错误");
+        }
     }
 
     static public void Run()
@@ -182,7 +273,7 @@ class Sample2
         double k3 = Convert.ToDouble(input[index++]);
 
         // 求解
-        VRPSolver.Solve(x, y, demand, capacity, disLimit, k1, k2, k3, OnFinish);
+        VRPSolver.Solve(x, y, demand, capacity, disLimit, k1, k2, k3, OnFinish, OnError);
     }
 }
 ```
