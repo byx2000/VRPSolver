@@ -2,7 +2,7 @@
 
 class Sample1
 {
-    // 当求解完成时，此方法将会被调用
+    // 求解成功回调方法
     static private void OnFinish(int[][] path, double[] load, double[] mileage)
     {
         Console.WriteLine("Sample1求解完成！\n");
@@ -29,6 +29,41 @@ class Sample1
         Console.WriteLine();
     }
 
+    // 求解失败回调方法
+    static private void OnError(int errCode)
+    {
+        Console.WriteLine("求解失败");
+
+        if (errCode == VRPSolver.NODE_DATA_SIZE_INVALID)
+        {
+            Console.WriteLine("配送点数据长度不一致");
+        }
+        else if (errCode == VRPSolver.CAR_DATA_SIZE_INVALID)
+        {
+            Console.WriteLine("车辆数据长度不一致");
+        }
+        else if (errCode == VRPSolver.WEIGHT_INVALID)
+        {
+            Console.WriteLine("权重数值不合法");
+        }
+        else if (errCode == VRPSolver.DEMAND_INVALID)
+        {
+            Console.WriteLine("配送点需求不合法");
+        }
+        else if (errCode == VRPSolver.CAPACITY_INVALID)
+        {
+            Console.WriteLine("车辆载重量不合法");
+        }
+        else if (errCode == VRPSolver.DISLIMIT_INVALID)
+        {
+            Console.WriteLine("车辆里程限制不合法");
+        }
+        else
+        {
+            Console.WriteLine("未知错误");
+        }
+    }
+
     static public void Run()
     {
         // 10个配送点
@@ -44,6 +79,6 @@ class Sample1
         double k3 = 1.0;
 
         // 求解
-        VRPSolver.Solve(x, y, demand, capacity, disLimit, k1, k2, k3, OnFinish);
+        VRPSolver.Solve(x, y, demand, capacity, disLimit, k1, k2, k3, OnFinish, OnError);
     }
 }
