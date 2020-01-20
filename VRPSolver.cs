@@ -54,6 +54,7 @@ class VRPSolver
         if (!(capacity.Length > 0 && capacity.Length == disLimit.Length))
         {
             onError(CAR_DATA_SIZE_INVALID);
+            return;
         }
         for (int i = 0; i < capacity.Length; ++i)
         {
